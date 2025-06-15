@@ -13,8 +13,9 @@ def main():
     You can always return to adjust your preferences and regenerate the map, just remember that making one map can take up to a few minutes.""")
 
     if "data" not in st.session_state:
-        data = gpd.read_file("data/data.shp")
-        data.columns = ['playground_quality', 
+        data = gpd.read_file("data/data1.shp")
+        data.columns = ["FID_data",
+                        'playground_quality', 
                         'picnic_quality', 
                         'parks_quality', 
                         'sport_equipment_quality', 
@@ -52,6 +53,8 @@ def main():
                         'professionial_school_quality', 
                         'private_kindergarten_quality', 
                         'special_school_quality', 
+                        "buy_quality",
+                        "rent_quality",
                         'Shape_Leng', 
                         'Shape_Area',
                         'geometry']
@@ -65,8 +68,7 @@ def main():
                   "health_center_val", "pharmacies_val", "bombeiros_val", "police_val", "malls_val", "mercados_val", "feiras_val",
                   "papelarias_val", "theatres_val", "picnic_val", "hotels_val", "metro_val", "train_val", "bicicle_val", "roads_val",
                   "electrocar_val", "funicular_val", "tracks_val",
-                  
-                  "recycling_val", "restrooms_val"]
+                  "recycling_val", "restrooms_val", "buy_val", "rent_val"]
 
     for val in list_names:
         if val not in st.session_state:
@@ -94,12 +96,10 @@ def main():
             st.session_state["parks_val"] = st.number_input("Proximity to Parks", value=st.session_state["parks_val"])
             st.session_state["greens_val"] = st.number_input("Proximity to Green Spaces", value=st.session_state["greens_val"])
         elif selectbox == "Cultural & Historical Landmarks":
-            # TODO CENTER CULTURAL
             st.session_state["museums_val"] = st.number_input("Proximity to Museums", value=st.session_state["museums_val"])
             st.session_state["monuments_val"] = st.number_input("Proximity to National Monuments", 
                                                                 value=st.session_state["monuments_val"])
         elif selectbox == "Educational Institutions":
-            # TODO Library 
             st.session_state["public_kindergarten_val"] = st.number_input("Proximity to Public Kindergartens", 
                                                                           value=st.session_state["public_kindergarten_val"])
             st.session_state["private_kindergarten_val"] = st.number_input("Proximity to Private Kindergartens", 
@@ -115,7 +115,6 @@ def main():
             st.session_state["professionial_school_val"] = st.number_input("Proximity to Professional Schools", 
                                                                            value=st.session_state["professionial_school_val"])
         elif selectbox == "Sports Facilities & Recreation":
-            #TODO pools? gyms?
             st.session_state["sport_equipment_val"] = st.number_input("Proximity to Outdoor Gyms", 
                                                                       value=st.session_state["sport_equipment_val"])
             st.session_state["playground_val"] = st.number_input("Proximity to Playgrounds",
@@ -144,7 +143,8 @@ def main():
             st.session_state["theatres_val"] = st.number_input("Proximity to Theatres", value=st.session_state["theatres_val"])
             st.session_state["picnic_val"] = st.number_input("Proximity to Picnic Spaces", value=st.session_state["picnic_val"])
         elif selectbox == "Housing Costs":
-            # TODO rent, price
+            st.session_state["rent_val"] = st.number_input("Rent in € per m2 per Month", value=st.session_state["rent_val"])
+            st.session_state["buy_val"] = st.number_input("Price in € per m2", value=st.session_state["buy_val"])
             st.session_state["hotels_val"] = st.number_input("Proximity to Hotels", value=st.session_state["hotels_val"])
         elif selectbox == "Public Transport & Mobility": 
             st.session_state["metro_val"] = st.number_input("Proximity to Metro Stations", value=st.session_state["metro_val"])
@@ -166,7 +166,7 @@ def main():
                 for el in list_names:
                     st.session_state[splitter(el) + "_final"] = st.session_state[el]
 
-    if st.session_state["submitted"]: #or st.session_state["mapped"]:
+    if st.session_state["submitted"]:
         tot = []
         for val in list_names:
             tot.append((splitter(val) + "_quality", st.session_state[splitter(val) + "_final"]))

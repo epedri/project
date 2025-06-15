@@ -3,6 +3,20 @@ import pandas as pd
 
 def user_importance(data, tups=[]):
     data_c = data.copy()
+
+    for ind in range(len(tups)):
+        if tups[ind][0] == "buy_quality":
+            m = data_c["buy_quality"].max()
+            data_c["buy_quality"] = data_c["buy_quality"].apply(lambda x: 5*(m-abs(x-tups[ind][1]))/m)
+            tups[ind] = ("buy_quality", 1)
+        elif tups[ind][0] == "rent_quality":
+            m = data_c["rent_quality"].max()
+            data_c["rent_quality"] = data_c["rent_quality"].apply(lambda x: 5*(m-abs(x-tups[ind][1]))/m)
+            tups[ind] = ("rent_quality", 1)
+        else:
+            pass
+
+
     top = sum([tup[1] for tup in tups])
     data_c["result"] = data.drop("geometry", axis=1).T.apply(lambda x: sum([x[tup[0]]*tup[1]/top for tup in tups]))
     data_c.sort_values(by="result", inplace=True)
