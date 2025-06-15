@@ -10,7 +10,7 @@ def main():
     st.title("Build Your Own Map")
     st.caption("""Chose your preferred points of interest from the sidebar, then adjust the importance of each point of interest using the sliders.      
     Once you are satisfied with your selections, click the 'Submit when Finish Browsing' button to generate your personalized map.            
-    You can always return to adjust your preferences and regenerate the map.""")
+    You can always return to adjust your preferences and regenerate the map, just remember that making one map can take up to a few minutes.""")
 
     if "data" not in st.session_state:
         data = gpd.read_file("data/data.shp")
@@ -131,8 +131,9 @@ def main():
                                                                     value=st.session_state["health_center_val"])
             st.session_state["pharmacies_val"] = st.number_input("Proximity to Pharmacies", value=st.session_state["pharmacies_val"])
         elif selectbox == "Public Safety & Law Enforcement":
-            st.session_state["bombeiros_val"] = st.number_input("Proximity to Pharmacies", value=st.session_state["bombeiros_val"])
-            st.session_state["police_val"] = st.number_input("Proximity to Firefighters Stations", value=st.session_state["police_val"])
+            st.session_state["bombeiros_val"] = st.number_input("Proximity to Firefighters Stations", 
+                                                                value=st.session_state["bombeiros_val"])
+            st.session_state["police_val"] = st.number_input("Proximity to Police Stations", value=st.session_state["police_val"])
         elif selectbox == "Retail & Grocery Stores":
             st.session_state["malls_val"] = st.number_input("Proximity to Malls", value=st.session_state["malls_val"])
             st.session_state["mercados_val"] = st.number_input("Proximity to Markets", value=st.session_state["mercados_val"])
@@ -140,7 +141,6 @@ def main():
             st.session_state["papelarias_val"] = st.number_input("Proximity to Stationery Stores", 
                                                                  value=st.session_state["papelarias_val"])
         elif selectbox == "Leisure & Entertainment Venues":
-            # TODO cinemas?
             st.session_state["theatres_val"] = st.number_input("Proximity to Theatres", value=st.session_state["theatres_val"])
             st.session_state["picnic_val"] = st.number_input("Proximity to Picnic Spaces", value=st.session_state["picnic_val"])
         elif selectbox == "Housing Costs":
@@ -156,6 +156,9 @@ def main():
             st.session_state["funicular_val"] = st.number_input("Proximity to Funiculars and Inclined Elevators", 
                                                                  value=st.session_state["funicular_val"])
             st.session_state["tracks_val"] = st.number_input("Remoteness from Train Tracks", value=st.session_state["tracks_val"])
+        elif selectbox == "Other":
+            st.session_state["recycling_val"] = st.number_input("Proximity to EcoPoints", value=st.session_state["recycling_val"])
+            st.session_state["restrooms_val"] = st.number_input("Proximity to Public Restrooms", value=st.session_state["restrooms_val"])
 
         with st.form(key="submit_form"):
             st.session_state["submitted"] = st.form_submit_button(label="Submit when Finish Browsing")
@@ -164,25 +167,31 @@ def main():
                     st.session_state[splitter(el) + "_final"] = st.session_state[el]
 
     if st.session_state["submitted"]: #or st.session_state["mapped"]:
-        st.session_state["mapped"] = True
-        st.session_state["submitted"] = False
         tot = []
         for val in list_names:
             tot.append((splitter(val) + "_quality", st.session_state[splitter(val) + "_final"]))
         st.session_state["trying"] = user_importance(data, tot)
-        st.session_state["map_base"] = st.session_state["trying"].explore(column='result', tiles='CartoDB dark_matter', 
+
+        st.session_state["mapped"] = True
+        st.session_state["submitted"] = False
+            
+        st.session_state["map_base"] = st.session_state["trying"].explore(column='result', tiles='CartoDB Positron', 
                                                                           cmap="RdYlGn", vmin=0, vmax=5,
                                                                           location=[38.71, -9.05], zoom_start=10.5, 
-                                                                          scrollWheelZoom=False, tooltip=False)
+                                                                          scrollWheelZoom=False, tooltip=False,
+                                                                          #legend_kwds={"labels":labels}
+                                                                          )
         st_map = st_folium(st.session_state["map_base"], width=900, height=500)
     elif st.session_state["mapped"]:
-        st.session_state["map_base"] = st.session_state["trying"].explore(column='result', tiles='CartoDB dark_matter', 
+        st.session_state["map_base"] = st.session_state["trying"].explore(column='result', tiles='CartoDB Positron', 
                                                                           cmap="RdYlGn", vmin=0, vmax=5,
                                                                           location=[38.71, -9.05], zoom_start=10.5, 
-                                                                          scrollWheelZoom=False, tooltip=False)
+                                                                          scrollWheelZoom=False, tooltip=False,
+                                                                          #legend_kwds={"labels":labels}
+                                                                          )
         st_map = st_folium(st.session_state["map_base"], width=900, height=500)
     else:
-        map_base = folium.Map(location=[38.71, -9.05], zoom_start=10.5, scrollWheelZoom=False, tiles="CartoDB dark_matter")
+        map_base = folium.Map(location=[38.71, -9.05], zoom_start=10.5, scrollWheelZoom=False, tiles="CartoDB Positron")
         st_map = st_folium(map_base, width=900, height=500)
     
     exit_bt = st.sidebar.button(label="Exit", icon=":material/logout:")
@@ -191,11 +200,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
-
-
-############################################################################################
-#[
-#'recycling_quality', 
-#'restrooms_quality', 
-#]
