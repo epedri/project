@@ -14,17 +14,8 @@ def main():
     
 
 
-    data = gpd.read_file("data/metro_train.shp")
+    data = gpd.read_file("data/data.shp")
     # columns will be named properly at final
-    data.columns = ["FID_Metro_",
-                    "Id",
-                    "metro_quality",
-                    "FID_Train_",
-                    "Id_1",
-                    "train_quality",
-                    "Shape_Leng",
-                    "Shape_Area",
-                    "geometry"]
 
     for val in ["metro_val", "train_val", "whatever_val"]:
         if val not in st.session_state:
