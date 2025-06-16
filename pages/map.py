@@ -183,8 +183,6 @@ def main():
                                                                           #legend_kwds={"labels":labels}
                                                                           )
         st_map = st_folium(st.session_state["map_base"], width=900, height=500)
-        st.cache_data.clear()
-        st.cache_resource.clear()
     elif st.session_state["mapped"]:
         st.session_state["map_base"] = st.session_state["trying"].explore(column='result', tiles='CartoDB Positron', 
                                                                           cmap="RdYlGn", vmin=0, vmax=5,
@@ -193,8 +191,6 @@ def main():
                                                                           #legend_kwds={"labels":labels}
                                                                           )
         st_map = st_folium(st.session_state["map_base"], width=900, height=500)
-        st.cache_data.clear()
-        st.cache_resource.clear()
     else:
         map_base = folium.Map(location=[38.71, -9.05], zoom_start=10.5, scrollWheelZoom=False, tiles="CartoDB Positron")
         st_map = st_folium(map_base, width=900, height=500)
