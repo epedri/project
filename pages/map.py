@@ -147,8 +147,8 @@ def main():
             st.session_state["theatres_val"] = st.number_input("Proximity to Theatres", value=st.session_state["theatres_val"])
             st.session_state["picnic_val"] = st.number_input("Proximity to Picnic Spaces", value=st.session_state["picnic_val"])
         elif selectbox == "Housing Costs":
-            st.session_state["rent_val"] = st.number_input("Rent in € per m2 per Month", value=st.session_state["rent_val"])
-            st.session_state["buy_val"] = st.number_input("Price in € per m2", value=st.session_state["buy_val"])
+            st.session_state["rent_val"] = st.number_input("Cheaper Rent Importance", value=st.session_state["rent_val"])
+            st.session_state["buy_val"] = st.number_input("Cheaper Price of Property Importance", value=st.session_state["buy_val"])
             st.session_state["hotels_val"] = st.number_input("Proximity to Hotels", value=st.session_state["hotels_val"])
         elif selectbox == "Public Transport & Mobility": 
             st.session_state["metro_val"] = st.number_input("Proximity to Metro Stations", value=st.session_state["metro_val"])
@@ -180,6 +180,7 @@ def main():
         tot = []
         for val in list_names:
             tot.append((splitter(val) + "_quality", st.session_state[splitter(val) + "_final"]))
+        
         st.session_state["trying"] = user_importance(data, tot)
 
         st.session_state["mapped"] = True

@@ -4,9 +4,10 @@ import geopandas as gpd
 
 def user_importance(data, tups=[]):
     data_c = data.copy()
-    data_c = gpd.GeoDataFrame(data_c[[t[0] for t in tups] + ["geometry"]])
+    data_c = gpd.GeoDataFrame(data_c[[t[0] for t in tups if t[1] != 0] + ["geometry"]])
+    tups = [t for t in tups if t[1] != 0]
 
-    for ind in range(len(tups)):
+    """for ind in range(len(tups)):
         if tups[ind][0] == "buy_quality":
             m = data_c["buy_quality"].max()
             data_c["buy_quality"] = data_c["buy_quality"].apply(lambda x: 5*(m-abs(x-tups[ind][1]))/m)
@@ -16,7 +17,7 @@ def user_importance(data, tups=[]):
             data_c["rent_quality"] = data_c["rent_quality"].apply(lambda x: 5*(m-abs(x-tups[ind][1]))/m)
             tups[ind] = ("rent_quality", 1)
         else:
-            pass
+            pass"""
 
 
     top = sum([tup[1] for tup in tups])
