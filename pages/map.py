@@ -1,3 +1,6 @@
+import sys
+sys.dont_write_bytecode = True
+
 import streamlit as st
 import geopandas as gpd
 from streamlit_folium import st_folium

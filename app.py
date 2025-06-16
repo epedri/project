@@ -1,3 +1,6 @@
+import sys
+sys.dont_write_bytecode = True
+
 import streamlit as st
 import json
 from streamlit_lottie import st_lottie
