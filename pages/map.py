@@ -184,7 +184,7 @@ def main():
         st.session_state["map_base"] = st.session_state["trying"].explore(column='result', tiles='CartoDB Positron', 
                                                                           cmap="RdYlGn", vmin=0, vmax=5,
                                                                           location=[38.71, -9.05], zoom_start=10.5, 
-                                                                          scrollWheelZoom=False, #tooltip=False,
+                                                                          scrollWheelZoom=False, tooltip=False,
                                                                           #legend_kwds={"labels":labels}
                                                                           )
         st_map = st_folium(st.session_state["map_base"], width=900, height=500)
@@ -192,7 +192,7 @@ def main():
         st.session_state["map_base"] = st.session_state["trying"].explore(column='result', tiles='CartoDB Positron', 
                                                                           cmap="RdYlGn", vmin=0, vmax=5,
                                                                           location=[38.71, -9.05], zoom_start=10.5, 
-                                                                          scrollWheelZoom=False, #tooltip=False,
+                                                                          scrollWheelZoom=False, tooltip=False,
                                                                           #legend_kwds={"labels":labels}
                                                                           )
         st_map = st_folium(st.session_state["map_base"], width=900, height=500)
