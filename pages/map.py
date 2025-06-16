@@ -167,30 +167,30 @@ def main():
                 for el in list_names:
                     st.session_state[splitter(el) + "_final"] = st.session_state[el]
 
-    if st.session_state["submitted"] or st.session_state["mapped"]:
+    if st.session_state["submitted"]:
         tot = []
         for val in list_names:
             tot.append((splitter(val) + "_quality", st.session_state[splitter(val) + "_final"]))
-        trying = user_importance(data, tot)
+        st.session_state["trying"] = user_importance(data, tot)
 
         st.session_state["mapped"] = True
         st.session_state["submitted"] = False
             
-        map_base = trying.explore(column='result', tiles='CartoDB Positron', 
+        st.session_state["map_base"] = st.session_state["trying"].explore(column='result', tiles='CartoDB Positron', 
                                                                           cmap="RdYlGn", vmin=0, vmax=5,
                                                                           location=[38.71, -9.05], zoom_start=10.5, 
                                                                           scrollWheelZoom=False, tooltip=False,
                                                                           #legend_kwds={"labels":labels}
                                                                           )
-        st_map = st_folium(map_base, width=900, height=500)
-    #elif st.session_state["mapped"]:
-    #    st.session_state["map_base"] = st.session_state["trying"].explore(column='result', tiles='CartoDB Positron', 
-    #                                                                      cmap="RdYlGn", vmin=0, vmax=5,
-    #                                                                      location=[38.71, -9.05], zoom_start=10.5, 
-    #                                                                      scrollWheelZoom=False, tooltip=False,
-    #                                                                      #legend_kwds={"labels":labels}
-    #                                                                      )
-    #    st_map = st_folium(st.session_state["map_base"], width=900, height=500)
+        st_map = st_folium(st.session_state["map_base"], width=900, height=500)
+    elif st.session_state["mapped"]:
+        st.session_state["map_base"] = st.session_state["trying"].explore(column='result', tiles='CartoDB Positron', 
+                                                                          cmap="RdYlGn", vmin=0, vmax=5,
+                                                                          location=[38.71, -9.05], zoom_start=10.5, 
+                                                                          scrollWheelZoom=False, tooltip=False,
+                                                                          #legend_kwds={"labels":labels}
+                                                                          )
+        st_map = st_folium(st.session_state["map_base"], width=900, height=500)
     else:
         map_base = folium.Map(location=[38.71, -9.05], zoom_start=10.5, scrollWheelZoom=False, tiles="CartoDB Positron")
         st_map = st_folium(map_base, width=900, height=500)
