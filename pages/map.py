@@ -171,6 +171,7 @@ def main():
                     st.session_state[splitter(el) + "_final"] = st.session_state[el]
 
     if st.session_state["submitted"]:
+        st.runtime.legacy_caching.clear_cache()
         st.session_state["trying"] = None
         st.session_state["map_base"] = None
         tot = []
@@ -189,7 +190,7 @@ def main():
                                                                           )
         st_map = st_folium(st.session_state["map_base"], width=900, height=500)
     elif st.session_state["mapped"]:
-        st.session_state["map_base"] = st.session_state["trying"].explore(column='result', tiles='CartoDB Positron', 
+        st.session_state["map_base"] = st.session_state["F"].explore(column='result', tiles='CartoDB Positron', 
                                                                           cmap="RdYlGn", vmin=0, vmax=5,
                                                                           location=[38.71, -9.05], zoom_start=10.5, 
                                                                           scrollWheelZoom=False, tooltip=False,
