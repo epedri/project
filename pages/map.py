@@ -190,7 +190,7 @@ def main():
                                                                           )
         st_map = st_folium(st.session_state["map_base"], width=900, height=500)
     elif st.session_state["mapped"]:
-        st.session_state["map_base"] = st.session_state["F"].explore(column='result', tiles='CartoDB Positron', 
+        st.session_state["map_base"] = st.session_state["trying"].explore(column='result', tiles='CartoDB Positron', 
                                                                           cmap="RdYlGn", vmin=0, vmax=5,
                                                                           location=[38.71, -9.05], zoom_start=10.5, 
                                                                           scrollWheelZoom=False, tooltip=False,
