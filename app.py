@@ -12,7 +12,7 @@ st.sidebar.page_link("pages/map.py", label="Build Your Map", icon=":material/pub
 def load_lottiefile(filepath: str):
     with open(filepath, "r") as f:
         return json.load(f)
-lottie_animation = load_lottiefile(r"visual_assets\ani1.json")
+lottie_animation = load_lottiefile(r"visual_assets/ani1.json")
 
 
 st.title("Mapping Your Ideal Place")
