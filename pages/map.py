@@ -171,7 +171,10 @@ def main():
                     st.session_state[splitter(el) + "_final"] = st.session_state[el]
 
     if st.session_state["submitted"]:
-        st.runtime.legacy_caching.clear_cache()
+        #st.runtime.legacy_caching.clear_cache()
+        st.cache_data.clear()
+        st.cache_resource.clear()
+
         st.session_state["trying"] = None
         st.session_state["map_base"] = None
         tot = []
