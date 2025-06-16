@@ -87,7 +87,8 @@ def main():
               "Retail & Grocery Stores",
               "Leisure & Entertainment Venues",
               "Housing Costs",
-              "Public Transport & Mobility"
+              "Public Transport & Mobility",
+              "Other"
               ] 
 
     with st.sidebar:

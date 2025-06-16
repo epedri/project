@@ -1,6 +1,8 @@
 folium==0.19.7
 geopandas==1.1.0
 jenkspy==0.4.1
+matplotlib
+mapclassify
 pandas==2.2.3
 streamlit==1.43.2
 streamlit-lottie==0.0.5
