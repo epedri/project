@@ -1,8 +1,10 @@
 import jenkspy
 import pandas as pd
+import geopandas as gpd
 
 def user_importance(data, tups=[]):
     data_c = data.copy()
+    data_c = gpd.GeoDataFrame(data_c[[t[0] for t in tups] + ["geometry"]])
 
     for ind in range(len(tups)):
         if tups[ind][0] == "buy_quality":
