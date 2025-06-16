@@ -16,8 +16,8 @@ def main():
     You can always return to adjust your preferences and regenerate the map, just remember that making one map can take up to a few minutes.""")
 
     if "data" not in st.session_state:
-        data = gpd.read_file("data/data1.shp")
-        data.columns = ["FID_data",
+        data = gpd.read_file("data/data.shp")
+        data.columns = [
                         'playground_quality', 
                         'picnic_quality', 
                         'parks_quality', 
@@ -60,7 +60,8 @@ def main():
                         "rent_quality",
                         'Shape_Leng', 
                         'Shape_Area',
-                        'geometry']
+                        'geometry'
+                        ]
         st.session_state["data"] = data
     else:
         data = st.session_state["data"]
