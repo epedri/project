@@ -168,6 +168,8 @@ def main():
                     st.session_state[splitter(el) + "_final"] = st.session_state[el]
 
     if st.session_state["submitted"]:
+        st.session_state["trying"] = None
+        st.session_state["map_base"] = None
         tot = []
         for val in list_names:
             tot.append((splitter(val) + "_quality", st.session_state[splitter(val) + "_final"]))
